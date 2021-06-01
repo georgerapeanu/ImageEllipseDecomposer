@@ -1,0 +1,12 @@
+<!doctype html>
+<head>
+<meta http-equiv="refresh" content="5">
+</head>
+<body>
+<h1>Generation {{generation}}</h1>
+<img id="cv2_image" src="{{ url_for('video_feed') }}">
+<br/>
+<svg width="{{imgSize.0}}" height="{{imgSize.1}}">
+{{svgString}}
+</svg>
+</body>
