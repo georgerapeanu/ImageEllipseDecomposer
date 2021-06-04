@@ -30,8 +30,8 @@ def index():
   return render_template('index.html',generation=generation,svgString=Markup(fullSvgString),imgSize = IMG_SIZE);
 
 def random_ellipse(image):
-  center_coordinates = (random.randrange(image.shape[0]),random.randrange(image.shape[1]));
-  axesLength = (random.randrange(image.shape[0]),random.randrange(image.shape[1]));
+  center_coordinates = (random.randrange(image.shape[1] + 1),random.randrange(image.shape[0] + 1));
+  axesLength = (random.randrange(image.shape[0] + 1),random.randrange(image.shape[1] + 1));
   angle = random.randrange(360);
   startAngle = 0;
   endAngle = 360;
