@@ -42,6 +42,45 @@ def random_ellipse(image):
   svgString = '<ellipse cx="%d" cy="%d" rx="%d" ry="%d" style="fill:rgb(%d,%d,%d)" transform="rotate(%d %d %d)"></ellipse>' % (*center_coordinates,*axesLength,color[2],color[1],color[0],angle,*center_coordinates);
   return (answer,svgString);
 
+def random_circle(image):
+  center_coordinates = (random.randrange(image.shape[1] + 1),random.randrange(image.shape[0] + 1));
+  radius = random.randrange(image.shape[0] + 1);
+  angle = random.randrange(360);
+  startAngle = 0;
+  endAngle = 360;
+  color = (random.randrange(256),random.randrange(256),random.randrange(256));
+  thickness = -1;
+  answer = image.copy();
+  answer = cv2.circle(answer,center_coordinates,radius,color,thickness);
+  svgString = '<circle cx="%d" cy="%d" r="%d" style="fill:rgb(%d,%d,%d)"></circle>' % (*center_coordinates,radius,color[2],color[1],color[0]);
+  return (answer,svgString);
+
+def random_triangle(image):
+  points = []
+  pointString = ""
+  for i in range (0, 3):
+    currentpoint = (random.randrange(image.shape[1] + 1),random.randrange(image.shape[0] + 1))
+    points.append(currentpoint)
+    pointString += str(currentpoint[0]) + ',' + str(currentpoint[1]) + ' '
+  color = (random.randrange(256),random.randrange(256),random.randrange(256));
+  thickness = -1;
+  answer = image.copy();
+  answer = cv2.fillPoly(answer,np.array([points]),color);
+  svgString = '<polygon points="' + pointString + '" style="fill:rgb(%d,%d,%d)"></polygon>' % (color[2],color[1],color[0]);
+  return (answer,svgString);
+
+def random_rectangle(image):
+  start_coordinates = (random.randrange(image.shape[1] + 1),random.randrange(image.shape[0] + 1));
+  end_coordinates = (random.randrange(image.shape[1] + 1),random.randrange(image.shape[0] + 1));
+  color = (random.randrange(256),random.randrange(256),random.randrange(256));
+  thickness = -1;
+  answer = image.copy();
+  answer = cv2.rectangle(answer,start_coordinates,end_coordinates ,color,thickness);
+  svgString = '<rect width="%d" height="%d" x="%d" y="%d" style="fill:rgb(%d,%d,%d)"></rect>' % (abs(end_coordinates[0]-start_coordinates[0]),abs(end_coordinates[1]-start_coordinates[1]),min(start_coordinates[0],end_coordinates[0]),min(start_coordinates[1],end_coordinates[1]),color[2],color[1],color[0]);
+  return (answer,svgString);
+
+
+
 def start_server():
   app.run(host='0.0.0.0',port='8000');
   
@@ -53,8 +92,9 @@ svgFile = None;
 
 def __main__():
   parser = argparse.ArgumentParser(description='Processes images to ascii');
+  parser.add_argument('mode',metavar='mode',type=str,help='mode ( -e ellipse -c circle -t triangle -r rectangle)');
   parser.add_argument('image_path',metavar='image_path',type=str,help='specify path to image');
-
+  mode = parser.parse_args().mode;
   image_path = parser.parse_args().image_path;
   image = cv2.imread(image_path);
 
@@ -80,7 +120,14 @@ def __main__():
     best_dist = dist(image,my_image);
     best_svg = "";
     for attempt in range(0,ATTEMPTS_PER_GENERATION):
-      tmp,svg = random_ellipse(my_image);
+      if(mode == "e"):
+        tmp,svg = random_ellipse(my_image);
+      elif(mode == "c"):
+        tmp,svg = random_circle(my_image);
+      elif(mode == "t"):
+        tmp,svg = random_triangle(my_image);
+      elif(mode == "r"):
+        tmp,svg = random_rectangle(my_image);
       tmp_dist = dist(image,tmp);
       if(tmp_dist < best_dist):
         best = tmp;
