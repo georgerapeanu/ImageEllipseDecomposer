@@ -110,7 +110,7 @@ svgFile = None
 
 def __main__():
   parser = argparse.ArgumentParser(description='Processes images to ascii')
-  parser.add_argument('mode',metavar='mode',type=str,help='mode ( -e ellipse -c circle -t triangle -r rectangle)')
+  parser.add_argument('mode',metavar='mode',type=str,help='mode ( -e ellipse -c circle -t triangle -r rectangle -q square)')
   parser.add_argument('image_path',metavar='image_path',type=str,help='specify path to image')
   mode = parser.parse_args().mode
   image_path = parser.parse_args().image_path
@@ -144,6 +144,8 @@ def __main__():
         tmp,svg = random_circle(my_image)
       elif(mode == "t"):
         tmp,svg = random_triangle(my_image)
+      elif(mode == "r"):
+        tmp,svg = random_rectangle(my_image)
       elif(mode == "q"):
         tmp,svg = random_square(my_image)
       tmp_dist = dist(image,tmp)
