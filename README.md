@@ -13,6 +13,7 @@ Python program that takes in images and reconstructs them from primitive geometr
 * firefox ![firefox logo with triangles](examples/firefox_t_generation 9000.png)
 * firefox ![firefox logo with rectangles](examples/firefox_r_generation 300.png)
 * firefox ![firefox logo with squares](examples/firefox_q_generation 1000.png)
+* firefox ![firefox logo with squares](examples/blender.jpg)
 
 ## Features
 
