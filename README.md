@@ -26,7 +26,7 @@ The following modes are currently supported:
 
 ## Usage
 
-`./monteCarlo.py [m] [image_path]`
+`./monteCarlo.py [m] [image_path]` (where m is one of the 5 modes described above)
 
 you can view the progress in your browser on localhost
 Sharing real-time decomposition can be done by port-forwarding
@@ -34,7 +34,7 @@ Sharing real-time decomposition can be done by port-forwarding
 The images are automatically saved after a certain number of generations (`1000` by default)
 an SVG file will also be generated alongside the raster. This is view-able in the browser as well and gets saved when quitting the program or when the target number of generations is reached.
 
-**Notice:**the SVG file generation is the only reason you should use this over the newer C++ version, as it is the only feature not currently supported there.
+**Notice:** the SVG file generation is the only reason you should use this over the newer C++ version, as it is the only feature not currently supported there.
 
 ## How it works ?
 
